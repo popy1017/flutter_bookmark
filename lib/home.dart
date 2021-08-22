@@ -7,6 +7,10 @@ class Home extends StatelessWidget {
       body: Center(
         child: Text('This is Home Widget'),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
+      ),
     );
   }
 }
