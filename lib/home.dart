@@ -15,7 +15,11 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: ListView.builder(
         itemBuilder: (_, int index) {
-          return BookmarkCard(_sampleBookmark);
+          return Dismissible(
+            key: Key('${_sampleBookmark.imageUri}_$index'),
+            child: BookmarkCard(_sampleBookmark),
+            onDismissed: (DismissDirection direction) {},
+          );
         },
         itemCount: 10,
       ),
