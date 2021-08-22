@@ -16,10 +16,10 @@ class BookmarkAdapter extends TypeAdapter<Bookmark> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Bookmark.fromHive(
+    return Bookmark(
       title: fields[0] as String,
       description: fields[1] as String,
-      imageUri: fields[2] as Uri,
+      imageUri: fields[2] as String,
     );
   }
 

@@ -7,12 +7,6 @@ class Bookmark {
   Bookmark({
     required this.title,
     required this.description,
-    required String uri,
-  }) : imageUri = Uri.parse(uri);
-
-  Bookmark.fromHive({
-    required this.title,
-    required this.description,
     required this.imageUri,
   });
 
@@ -23,5 +17,5 @@ class Bookmark {
   String description;
 
   @HiveField(2)
-  Uri imageUri;
+  String imageUri;
 }
