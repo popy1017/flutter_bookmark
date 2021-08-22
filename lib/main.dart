@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: Home(),
+      home: ProviderScope(child: Home()),
     );
   }
 }
