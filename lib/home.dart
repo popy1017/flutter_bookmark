@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookmark/components/bookmark_card.dart';
 import 'package:flutter_bookmark/main.dart';
 import 'package:flutter_bookmark/models/bookmark.dart';
 import 'package:flutter_bookmark/repositories/bookmark_repository.dart';
