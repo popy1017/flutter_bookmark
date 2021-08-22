@@ -6,19 +6,23 @@ class BookmarkRepository {
 
   final Box<Bookmark> _box;
 
-  Future<int> create(Bookmark bookmark) async {
-    return _box.add(bookmark);
+  Box<Bookmark> get box => _box;
+
+  List<Bookmark> get bookmarks => _box.values.toList();
+
+  Future<void> create(Bookmark bookmark) async {
+    return _box.put(bookmark.id, bookmark);
   }
 
-  Future<Bookmark?> read(int id) async {
-    return _box.getAt(id);
+  Future<Bookmark?> read(String id) async {
+    return _box.get(id);
   }
 
-  Future<void> update(int id, Bookmark bookmark) async {
-    return _box.putAt(id, bookmark);
+  Future<void> update(Bookmark bookmark) async {
+    return _box.put(bookmark.id, bookmark);
   }
 
-  Future<void> delete(int id) async {
-    return _box.deleteAt(id);
+  Future<void> delete(Bookmark bookmark) async {
+    return _box.delete(bookmark.id);
   }
 }
