@@ -13,8 +13,11 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: BookmarkCard(_sampleBookmark),
+      body: ListView.builder(
+        itemBuilder: (_, int index) {
+          return BookmarkCard(_sampleBookmark);
+        },
+        itemCount: 10,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
