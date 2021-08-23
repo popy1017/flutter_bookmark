@@ -5,6 +5,7 @@ import 'package:flutter_bookmark/repositories/bookmark_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:metadata_fetch/metadata_fetch.dart';
 import 'package:uuid/uuid.dart';
+import 'package:validators/validators.dart';
 
 import 'components/bookmark_list.dart';
 import 'models/bookmark.dart';
@@ -19,7 +20,12 @@ class Home extends ConsumerWidget {
         onPressed: () async {
           final String? url = await showDialog<String?>(
             context: context,
-            builder: (_) => TextFormDialog(title: 'Add bookmark'),
+            builder: (_) => TextFormDialog(
+              title: 'Add bookmark',
+              isValid: (String text) {
+                return isURL(text);
+              },
+            ),
           );
 
           if (url != null) {
