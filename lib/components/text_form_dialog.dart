@@ -15,8 +15,6 @@ class TextFormDialog extends StatefulWidget {
 class _TextFormDialogState extends State<TextFormDialog> {
   final TextEditingController _textEditingController = TextEditingController();
 
-  bool enableAction = false;
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -30,11 +28,9 @@ class _TextFormDialogState extends State<TextFormDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: enableAction
-              ? () {
-                  Navigator.pop(context, _textEditingController.text);
-                }
-              : null,
+          onPressed: () {
+            Navigator.pop(context, _textEditingController.text);
+          },
           child: Text('OK'),
         ),
       ],
