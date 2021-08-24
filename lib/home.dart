@@ -44,6 +44,7 @@ class Home extends ConsumerWidget {
           ref.read(bookmarkRepository);
       final Bookmark _newBookmark = Bookmark(
         id: Uuid().v4(),
+        url: url,
         title: metadata.title ?? '',
         imageUri: metadata.image ??
             'https://flutter.dev/images/flutter-logo-sharing.png',

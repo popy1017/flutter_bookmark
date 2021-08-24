@@ -6,6 +6,7 @@ part 'bookmark.g.dart';
 class Bookmark {
   Bookmark({
     required this.id,
+    required this.url,
     required this.title,
     required this.description,
     required this.imageUri,
@@ -15,11 +16,14 @@ class Bookmark {
   String id;
 
   @HiveField(1)
-  String title;
+  String url;
 
   @HiveField(2)
-  String description;
+  String title;
 
   @HiveField(3)
+  String description;
+
+  @HiveField(4)
   String imageUri;
 }

@@ -18,23 +18,26 @@ class BookmarkAdapter extends TypeAdapter<Bookmark> {
     };
     return Bookmark(
       id: fields[0] as String,
-      title: fields[1] as String,
-      description: fields[2] as String,
-      imageUri: fields[3] as String,
+      url: fields[1] as String,
+      title: fields[2] as String,
+      description: fields[3] as String,
+      imageUri: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Bookmark obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.title)
+      ..write(obj.url)
       ..writeByte(2)
-      ..write(obj.description)
+      ..write(obj.title)
       ..writeByte(3)
+      ..write(obj.description)
+      ..writeByte(4)
       ..write(obj.imageUri);
   }
 
