@@ -10,12 +10,12 @@ late final bookmarkRepository;
 
 void main() async {
   await Hive.initFlutter();
-  await _initBox();
+  await initBox();
 
   runApp(MyApp());
 }
 
-Future<void> _initBox() async {
+Future<void> initBox() async {
   Hive.registerAdapter(BookmarkAdapter());
   final Box<Bookmark> _box = await Hive.openBox('bookmark');
   bookmarkRepository = Provider((ref) => BookmarkRepository(_box));
