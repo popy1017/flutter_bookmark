@@ -14,32 +14,37 @@ class BookmarkList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final BookmarkRepository _bookmarkRepository =
-        ref.read<BookmarkRepository>(bookmarkRepository);
-    return ValueListenableBuilder<Box<Bookmark>>(
-      valueListenable: _bookmarkRepository.box.listenable(),
-      builder: (BuildContext context, _, __) {
-        final List<Bookmark> _bookmarks = _bookmarkRepository.bookmarks;
+    final _asyncBookmarkRepository = ref.watch(bookmarkRepository);
+    return _asyncBookmarkRepository.when(
+      data: (BookmarkRepository _bookmarkRepository) {
+        return ValueListenableBuilder<Box<Bookmark>>(
+          valueListenable: _bookmarkRepository.box.listenable(),
+          builder: (BuildContext context, _, __) {
+            final List<Bookmark> _bookmarks = _bookmarkRepository.bookmarks;
 
-        if (_bookmarks.isEmpty) {
-          return Center(
-            child: Text('No bookmarks...'),
-          );
-        }
+            if (_bookmarks.isEmpty) {
+              return Center(
+                child: Text('No bookmarks...'),
+              );
+            }
 
-        return ListView.builder(
-          itemBuilder: (_, int index) {
-            return Dismissible(
-              key: Key(_bookmarks[index].id),
-              child: BookmarkCard(_bookmarks[index]),
-              onDismissed: (DismissDirection direction) async {
-                await _bookmarkRepository.delete(_bookmarks[index]);
+            return ListView.builder(
+              itemBuilder: (_, int index) {
+                return Dismissible(
+                  key: Key(_bookmarks[index].id),
+                  child: BookmarkCard(_bookmarks[index]),
+                  onDismissed: (DismissDirection direction) async {
+                    await _bookmarkRepository.delete(_bookmarks[index]);
+                  },
+                );
               },
+              itemCount: _bookmarks.length,
             );
           },
-          itemCount: _bookmarks.length,
         );
       },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (_, __) => const Center(child: CircularProgressIndicator()),
     );
   }
 }

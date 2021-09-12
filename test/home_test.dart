@@ -11,7 +11,6 @@ import 'init.dart';
 void main() {
   setUp(() async {
     await initialiseHive();
-    await initBox();
   });
 
   testWidgets('FloatingActionButtonをタップすると、TextFormDialogが表示される。',
@@ -25,8 +24,10 @@ void main() {
     expect(find.byType(TextFormDialog), findsNothing);
 
     await tester.tap(fab);
-    await tester.pumpAndSettle();
+    await tester.pump();
 
     expect(find.byType(TextFormDialog), findsOneWidget);
   });
+
+  testWidgets('データがない場合は、No bookmarks...と表示される', (widgetTester) async {});
 }

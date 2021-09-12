@@ -41,7 +41,7 @@ class Home extends ConsumerWidget {
 
     if (metadata != null) {
       final BookmarkRepository _bookmarkRepository =
-          ref.read(bookmarkRepository);
+          await ref.read(bookmarkRepository.future);
       final Bookmark _newBookmark = Bookmark(
         id: Uuid().v4(),
         url: url,

@@ -6,19 +6,19 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'home.dart';
 
-late final bookmarkRepository;
+bool _initted = false;
 
-void main() async {
-  await Hive.initFlutter();
-  await initBox();
-
-  runApp(MyApp());
-}
-
-Future<void> initBox() async {
+final bookmarkRepository = FutureProvider<BookmarkRepository>((ref) async {
+  if (!_initted) {
+    await Hive.initFlutter();
+  }
   Hive.registerAdapter(BookmarkAdapter());
   final Box<Bookmark> _box = await Hive.openBox('bookmark');
-  bookmarkRepository = Provider((ref) => BookmarkRepository(_box));
+  return BookmarkRepository(_box);
+});
+
+void main() async {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
