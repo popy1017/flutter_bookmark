@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bookmark/components/text_form_dialog.dart';
-import 'package:flutter_bookmark/main.dart';
+import 'package:flutter_bookmark/models/bookmark.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mockito/mockito.dart';
 
 import 'package:flutter_bookmark/home.dart';
 
 import 'init.dart';
+
+class MockBox extends Mock implements Box<Bookmark> {}
 
 void main() {
   setUp(() async {
