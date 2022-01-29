@@ -2,13 +2,22 @@ import 'package:flutter_bookmark/models/bookmark.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class BookmarkRepository {
-  BookmarkRepository(this._box);
-
-  final Box<Bookmark> _box;
+  late Box<Bookmark> _box;
 
   Box<Bookmark> get box => _box;
-
   List<Bookmark> get bookmarks => _box.values.toList();
+
+  static Future<BookmarkRepository> open() async {
+    final repos = BookmarkRepository();
+    await repos._initHive();
+    return repos;
+  }
+
+  Future<BookmarkRepository> _initHive() async {
+    Hive.registerAdapter(BookmarkAdapter());
+    _box = await Hive.openBox('bookmark');
+    return this;
+  }
 
   Future<void> create(Bookmark bookmark) async {
     return _box.put(bookmark.id, bookmark);

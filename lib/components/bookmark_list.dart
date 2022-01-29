@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bookmark/main.dart';
 import 'package:flutter_bookmark/models/bookmark.dart';
 import 'package:flutter_bookmark/repositories/bookmark_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'bookmark_card.dart';
+
+final bookmarkRepository = FutureProvider((ref) => BookmarkRepository.open());
 
 class BookmarkList extends ConsumerWidget {
   const BookmarkList({
