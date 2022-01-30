@@ -1,0 +1,17 @@
+name: flutter_bookmark_test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.8.0'
+          channel: 'stable'
+      - run: flutter pub get
+      - run: flutter test
