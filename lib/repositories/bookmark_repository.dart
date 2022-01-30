@@ -5,7 +5,10 @@ class BookmarkRepository {
   late Box<Bookmark> _box;
 
   Box<Bookmark> get box => _box;
+
   List<Bookmark> get bookmarks => _box.values.toList();
+
+  Stream<BoxEvent> get stream => _box.watch();
 
   static Future<BookmarkRepository> open() async {
     final repos = BookmarkRepository();

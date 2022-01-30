@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bookmark/components/text_form_dialog.dart';
-import 'package:flutter_bookmark/main.dart';
 import 'package:flutter_bookmark/repositories/bookmark_repository.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:metadata_fetch/metadata_fetch.dart';
 import 'package:uuid/uuid.dart';
@@ -37,11 +37,13 @@ class Home extends ConsumerWidget {
   }
 
   Future<void> _createBookmark(String url, WidgetRef ref) async {
+    EasyLoading.show();
+
     final Metadata? metadata = await MetadataFetch.extract(url);
 
     if (metadata != null) {
       final BookmarkRepository _bookmarkRepository =
-          await ref.read(bookmarkRepository.future);
+          await ref.read(bookmarkRepositoryProvider.future);
       final Bookmark _newBookmark = Bookmark(
         id: Uuid().v4(),
         url: url,
@@ -52,5 +54,6 @@ class Home extends ConsumerWidget {
       );
       await _bookmarkRepository.create(_newBookmark);
     }
+    EasyLoading.dismiss();
   }
 }

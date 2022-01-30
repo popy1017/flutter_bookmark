@@ -6,7 +6,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'bookmark_card.dart';
 
-final bookmarkRepository = FutureProvider((ref) => BookmarkRepository.open());
+final bookmarkRepositoryProvider =
+    FutureProvider((ref) => BookmarkRepository.open());
 
 class BookmarkList extends ConsumerWidget {
   const BookmarkList({
@@ -15,12 +16,14 @@ class BookmarkList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _asyncBookmarkRepository = ref.watch(bookmarkRepository);
+    final _asyncBookmarkRepository = ref.watch(bookmarkRepositoryProvider);
     return _asyncBookmarkRepository.when(
       data: (BookmarkRepository _bookmarkRepository) {
-        return ValueListenableBuilder<Box<Bookmark>>(
-          valueListenable: _bookmarkRepository.box.listenable(),
-          builder: (BuildContext context, _, __) {
+        // ValueListenableBuilderとbox.listenable()でも変更を検知できるが
+        // テストしづらいためStreamBuilderとbox.watch()を採用
+        return StreamBuilder(
+          stream: _bookmarkRepository.stream,
+          builder: (_, AsyncSnapshot<BoxEvent> snapshot) {
             final List<Bookmark> _bookmarks = _bookmarkRepository.bookmarks;
 
             if (_bookmarks.isEmpty) {
