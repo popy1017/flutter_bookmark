@@ -18,9 +18,6 @@ jobs:
 
   integration_test:
     strategy:
-      matrix:
-        device:
-          - "iPhone 13 (15.0)"
       fail-fast: false
     runs-on: macos-latest
     steps:
@@ -28,11 +25,7 @@ jobs:
         timeout-minutes: 10
         run: |
           UDID=$(
-            xcrun instruments -s |
-            awk \
-              -F ' *[][]' \
-              -v 'device=${{ matrix.device }}' \
-              '$1 == device { print $2 }'
+            xcrun xctrace list devices | grep -m 1 "iPhone 13" | sed -e "s/^.*(\(.*\)).*$/\1/"
           )
           xcrun simctl boot "${UDID:?No Simulator with this name found}"
       - uses: actions/checkout@v2
