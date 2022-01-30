@@ -15,3 +15,28 @@ jobs:
           channel: 'stable'
       - run: flutter pub get
       - run: flutter test
+
+  integration_test:
+    strategy:
+      matrix:
+        device:
+          - "iPhone 13 (15.0)"
+      fail-fast: false
+    runs-on: macos-latest
+    steps:
+      - name: "start simulator"
+        timeout-minutes: 10
+        run: |
+          UDID=$(
+            xcrun instruments -s |
+            awk \
+              -F ' *[][]' \
+              -v 'device=${{ matrix.device }}' \
+              '$1 == device { print $2 }'
+          )
+          xcrun simctl boot "${UDID:?No Simulator with this name found}"
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+      - run: "flutter test integration_test"
