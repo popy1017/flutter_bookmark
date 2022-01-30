@@ -15,6 +15,7 @@ class BookmarkView extends StatelessWidget {
       ),
       body: WebView(
         initialUrl: _bookmark.url,
+        javascriptMode: JavascriptMode.unrestricted,
       ),
     );
   }
